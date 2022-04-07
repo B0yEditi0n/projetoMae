@@ -1,165 +1,161 @@
-import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-//Função de inicial de chamada feito em dart
 void main() {
   runApp(
-    const MaterialApp(
-      title: "Tela de Login",
+    MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: login(),
+      title: 'IMC',
+      home: TelaPrincipal(),
     ),
   );
 }
 
-//Declaração de Tela Principal
-class login extends StatefulWidget {
-  const login({Key? key}) : super(key: key);
+//
+// TELA PRINCIPAL
+// Stateful = stf+TAB
+class TelaPrincipal extends StatefulWidget {
+  const TelaPrincipal({Key? key}) : super(key: key);
 
   @override
-  State<login> createState() => _loginEstado();
+  State<TelaPrincipal> createState() => _TelaPrincipalState();
 }
 
-class _loginEstado extends State<login> {
+class _TelaPrincipalState extends State<TelaPrincipal> {
+  
+  //Declaração de atributos que serão utilizados
+  //para receber os dados que o usuário digitar
+  //no campo de texto
+  var txtPeso = TextEditingController();
+  var txtAltura = TextEditingController();
+
+
+
+  
   @override
-  //Isso é estável
   Widget build(BuildContext context) {
-    //Aqui Está o Widgets do APP
     return Scaffold(
-      //BARRA DE MENU
-      backgroundColor: Color.fromRGBO(23, 23, 23, 1),
+      //BARRA TÍTULO
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Login de Usuário',
-          style: TextStyle(
-            fontSize: 25,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: const Text('Calculadora IMC'),
         centerTitle: true,
+        backgroundColor: Colors.green.shade900,
       ),
-
-      //CORPO PRINCIPAL
-      body: Column(
-        children: <Widget>[
-          //Epaço
-          const SizedBox(height: 30),
-
-          //Icone de Usuário
-          const Icon(
-            Icons.account_circle,
-            color: Colors.white,
-            size: 120,
-          ),
-
-          const SizedBox(height: 50),
-
-          //Entrda do Email
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            child: TextFormField(
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: "Coloque o Email",
-              ),
-            ),
-          ),
-
-          //Espaço
-          const SizedBox(height: 10),
-
-          //Entrada da Senha
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            child: TextFormField(
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: "Coloque a Senha",
-              ),
-            ),
-          ),
-
-          //Espaço
-          const SizedBox(height: 50),
-
-          //Botão de Entrar e Cadastrar
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 50,
-                width: 150,
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(16.0),
-                      primary: Colors.black,
-                      backgroundColor: Colors.white,
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                    /*
-                    ButtonStyle(
-                      //fixedSize: ,
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                    ),
-                    */
-                    onPressed: () {},
-                    child: const Text("Entrar")),
-              ),
-
-              //Size Box é apenas para dar Espaço
-              const SizedBox(width: 30),
-
-              //Envolver um botão dentro de uma size box permite escolher
-              // o tamanho do botão
-              SizedBox(
-                height: 50,
-                width: 150,
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(16.0),
-                      primary: Colors.black,
-                      backgroundColor: Colors.white,
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {},
-                    child: const Text("Cadastrar")),
-              ),
-            ],
-          )
-
-          /*
-            SizedBox(
-              TextButton(onPressed: onPressed, child: child)
-            )
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const <Widget>[
-                TextButton(onPressed: onPressed, child: child)
-                
+      backgroundColor: Colors.grey.shade100,
+      //BODY
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              children:  [
+                const Icon(
+                  Icons.people_alt,
+                  size: 100,
+                  color: Color.fromRGBO(27, 94, 32, 1),
+                ),
+                //
+                campoTexto('Peso', txtPeso),
+                const SizedBox(height: 20,),
+                //
+                campoTexto('Altura', txtAltura),
+                const SizedBox(height:30,),
+                //
+                botao('calcular'),
               ],
             ),
-            */
-        ],
+          ),
+        ),
       ),
     );
   }
-}
 
-//Aqui não possui um build por ser um stateful
+  //
+  // CAMPO DE TEXTO
+  //
+  campoTexto(rotulo, variavel){
 
-//construa um widget e construa no contexto contexto
-/*
-  login (build(BuildContext context){
-    return MaterialApp(
-      title: 'Login'
+    return TextFormField(
+      //associar a variável que receberá o valor
+      //digitado no campo de texto
+      controller: variavel,
+
+      decoration: InputDecoration(
+        labelText: rotulo,
+        labelStyle: const TextStyle(
+          fontSize: 22,
+          color: Color.fromRGBO(27, 94, 32, 0.5),
+        ),
+
+        hintText: 'Informe o valor',
+        hintStyle: const TextStyle(
+          fontSize: 22,
+          color: Color.fromRGBO(27, 94, 32, 0.5),
+        ),
+
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+
+      ),
     );
-  }*/
+
+  }
+
+  /*
+  BOTÃO
+  */
+  botao(rotulo){
+    return SizedBox(
+      width: 200,
+      height: 50,
+      child: ElevatedButton(
+        //EVento que o ocorerrá quando o usuário adicionar
+        //o botão
+        onPressed: (){
+        //o que acontece quando o usário aperta o botão é definido
+        //aqui
+          //recuperar os dados informados pelo usuário
+          setState(() { /*Usado para manipular informações 
+          Enviar e receber informações*/
+            double p = double.parse(txtPeso.text.replaceFirst(',','.'));
+            double a = double.parse(txtAltura.text.replaceFirst(',','.'));
+            //parse é uma conversão de um tipo para outro
+            double i = p/pow(a,2);
+
+            caixaDialogo('o valor do IMC é ${i.toStringAsFixed(2)}');
+            //$ siginifica que você exibirá o valor de uma viável  
+          });
+        },
+        child: Text(
+          rotulo, 
+          style: const TextStyle(fontSize: 22),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green,
+          ),
+      ),
+    );
+  }
+  /*
+  CAIXA DE DIÁLOGO
+  */
+  caixaDialogo(msg){
+    return showDialog(
+      context: context, 
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: Text(msg),
+          actions: [
+            TextButton(onPressed: (){Navigator.of(context).pop();
+            },
+            child:  const Text('fechar')
+            )
+          ],
+        );
+      },
+      );
+  }
+
+}
