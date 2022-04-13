@@ -14,33 +14,13 @@ widgetDialogo(msgExter, msgInter, escondido) {
 
 //BARAR PRINCIPAL
 
-barraMenuWidget(titulo, voltar, contexto) {
-  if (voltar == true) {
+barraMenuWidget(titulo, voltar) {
+
     return AppBar(
       backgroundColor: Colors.white,
-      actions: [
-        IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-          ),
-          onPressed: () {
-            Navigator.pop(contexto);
-          },
-        )
-      ],
-      title: Text(
-        titulo,
-        style: const TextStyle(
-          fontSize: 25,
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      centerTitle: true,
-    );
-  } else {
-    return AppBar(
-      backgroundColor: Colors.white,
+
+      //Para mudar a cor do IconButton basta usar essa linha;
+      iconTheme: const IconThemeData(color: Colors.black),
       title: Text(
         titulo,
         style: const TextStyle(
@@ -52,4 +32,3 @@ barraMenuWidget(titulo, voltar, contexto) {
       centerTitle: true,
     );
   }
-}

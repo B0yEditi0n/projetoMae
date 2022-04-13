@@ -15,7 +15,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
       backgroundColor: Color.fromRGBO(23, 23, 23, 1),
 
       //Barra do menu
-      appBar: barraMenuWidget("Casdastro de Usuário", false, context),
+      appBar: barraMenuWidget("Casdastro de Usuário", false),
 
       //corpo
       body: Center(

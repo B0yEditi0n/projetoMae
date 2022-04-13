@@ -17,7 +17,7 @@ class _loginTelaEstado extends State<loginTela> {
     return Scaffold(
       //BARRA DE MENU
       backgroundColor: const Color.fromRGBO(23, 23, 23, 1),
-      appBar: barraMenuWidget("Login de Usuário", true, null),
+      appBar: barraMenuWidget("Login de Usuário", true),
 
       //CORPO PRINCIPAL
       body: Column(
