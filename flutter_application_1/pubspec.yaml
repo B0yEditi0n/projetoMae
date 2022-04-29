@@ -61,6 +61,11 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - lib/dados_usuarios/UsuariosBd.json
+    - lib/imagens/pixSupportUs.jfif
+    - lib/imagens/ProgramadoresSuportUs.jpg
+    - lib/imagens/pixSupportUs.jfif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
