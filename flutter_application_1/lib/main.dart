@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/funcionalidades/bloqueioAparelho.dart';
 import 'package:flutter_application_1/funcionalidades/detalhes_usuario.dart';
