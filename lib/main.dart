@@ -11,7 +11,6 @@ import 'TelaPrincipal.dart';
 
 //Funcionalidades Telas
 import 'package:tails_mommy/funcionalidades/listaUsuarios.dart';
-import 'package:tails_mommy/funcionalidades/listaUsuarios.dart';
 import 'package:tails_mommy/funcionalidades/configuracoesUsuario.dart';
 import 'package:tails_mommy/funcionalidades/ConfTela.dart';
 import 'package:tails_mommy/funcionalidades/contribua.dart';

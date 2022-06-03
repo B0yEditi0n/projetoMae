@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class UsuariosBd {
   String id;
   String nome;

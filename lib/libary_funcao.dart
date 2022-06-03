@@ -1,10 +1,4 @@
-//Firebase Funções
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/material.dart';
-
-import 'bibliotecaDeFuncao/mensagem.dart';
 
 //Variáveis Globais
 
@@ -136,69 +130,4 @@ divisor() {
     endIndent: 200,
     color: Colors.grey,
   );
-}
-
-//
-//LOGIN DO FIRE BASE
-//
-
-void login(context, email, senha) {
-  FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: email, password: senha)
-      .then((res) {
-    //TUDO CERTO
-    sucesso(context, 'Usuário autenticado com sucesso.');
-    Navigator.pushReplacementNamed(context, 'principal');
-  }).catchError((e) {
-    switch (e.code) {
-      case 'invalid-email':
-        erro(context, 'O formato do email é inválido.');
-        break;
-      case 'user-not-found':
-        erro(context, 'Usuário não encontrado.');
-        break;
-      case 'wrong-password':
-        erro(context, 'Senha incorreta.');
-        break;
-      default:
-        erro(context, e.code.toString());
-    }
-  });
-}
-
-void criarConta(context, nome, email, senha) {
-  FirebaseAuth.instance
-      .createUserWithEmailAndPassword(email: email, password: senha)
-      .then((res) {
-    //TUDO CERTO!!
-    sucesso(context, 'Usuário criado com sucesso!');
-    Navigator.pop(context);
-  }).catchError((e) {
-    switch (e.code) {
-      case 'invalid-email':
-        erro(context, 'O formato do email é inválido.');
-        break;
-      case 'email-already-in-use':
-        erro(context, 'O email já foi cadastrado.');
-        break;
-      default:
-        erro(context, e.code.toString());
-    }
-  });
-}
-
-void loginConta(email, senha, context) {
-  FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: email, password: senha)
-      //Situações de Login
-      .then((res) {
-    //Login Efetuado com Sucesso
-    //Mensagem
-    sucesso(context, "Conta Logada Com Sucesso");
-    //Rota
-    Navigator.pushReplacementNamed(context, '/telaPrincipal');
-  }).catchError((e) {
-    //Erro no Login
-    erro(context, "Alguma Coisa está errada");
-  });
 }

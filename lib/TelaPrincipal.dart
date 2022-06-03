@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'libary_funcao.dart';
 
 class TelaPrincipal extends StatefulWidget {
-  final String nomedeusuario;
-  const TelaPrincipal(this.nomedeusuario, {Key? key}) : super(key: key);
+  const TelaPrincipal({Key? key}) : super(key: key);
 
   @override
   State<TelaPrincipal> createState() => _TelaPrincipalState();
@@ -17,7 +16,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       backgroundColor: Colors.black,
 
       //Barra e Menu
-      appBar: barraMenuWidget(widget.nomedeusuario),
+      appBar: barraMenuWidget("nome de usuario"),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
@@ -48,9 +47,9 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/listadeusuarios');
                 },
-                child: Text(
-                  widget.nomedeusuario,
-                  style: const TextStyle(
+                child: const Text(
+                  "nome de usuario",
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
                     fontFamily: "Arial",

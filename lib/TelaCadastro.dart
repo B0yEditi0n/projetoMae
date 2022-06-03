@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tails_mommy/bibliotecaDeFuncao/mensagem.dart';
 import 'libary_funcao.dart';
 import 'TelaPrincipal.dart';
+import 'package:tails_mommy/bibliotecaDeFuncao/funcoesfirebase.dart';
 
 class TelaCadastro extends StatefulWidget {
   const TelaCadastro({Key? key}) : super(key: key);
@@ -76,13 +78,12 @@ class _TelaCadastroState extends State<TelaCadastro> {
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
-                      criarConta(
-                          context, txtNome.text, txtEmail.text, txtSenha.text);
-                      Navigator.pop(context);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TelaPrincipal()));
+                      if (txtSenha.text != txtSenha_.text) {
+                        erro(context, "Senhas devem estar identicas");
+                      } else {
+                        criarConta(txtEmail.text, txtSenha.text, txtNome.text,
+                            context);
+                      }
                     },
                     child: const Text("Cadastrar")),
               ),
