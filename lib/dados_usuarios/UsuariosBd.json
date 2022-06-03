@@ -1,0 +1,17 @@
+[
+    {
+        "id": "u#001",
+        "nome": "Usuario 1",
+        "email" : "user@email.com",
+        "data_nascimento": {
+            "dia" : "01",
+            "mes" : "01",
+            "ano" : "2000"
+        },
+        "sono_regular" : {
+            "horario_de_dormir" : "20:00",
+            "horario_de_acordar" : "05:00"
+        } 
+    }
+]
+   

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "228354961703",
+    "project_id": "projeto-mamae-20aef",
+    "storage_bucket": "projeto-mamae-20aef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228354961703:android:5c6a4f0a7aca63c128f902",
+        "android_client_info": {
+          "package_name": "com.example.tails_mommy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228354961703-u4d4o5adv70knc8itskgbjm25shilus6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdrmQoaZvtFDNJwkJTDO4LGDnrH_FbyUc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228354961703-u4d4o5adv70knc8itskgbjm25shilus6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "228354961703-qv54vji06q2lkc6gjv88hvepvgksfp93.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
