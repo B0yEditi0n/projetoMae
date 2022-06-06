@@ -31,7 +31,7 @@ Future<void> main() async {
     routes: {
       '/loginTela': (context) => loginTela(),
       '/cadastroTela': (context) => const TelaCadastro(),
-      '/telaPrincipal': (context) => const TelaPrincipal(),
+      '/telaPrincipal': (context) => TelaPrincipal(),
       '/listadeusuarios': (context) => const ListaUsuarios(),
       '/detalhesContaUsuario': (context) => const detalhesContaUsuario(),
       '/configurausu': (context) => const configuraUsuario(),

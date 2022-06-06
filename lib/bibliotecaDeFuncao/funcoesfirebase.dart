@@ -17,9 +17,8 @@ void criarConta(email, senha, nome, context) {
     sucesso(context, 'Usuário criado com sucesso!');
     //REGISTRO DE DADOS
 
-    FirebaseFirestore.instance.collection('DadosUsuarios').add(
+    FirebaseFirestore.instance.collection('DadosUsuarios').doc(FirebaseAuth.instance.currentUser!.uid.toString(),).set(
       {
-        "uid": (FirebaseAuth.instance.currentUser!.uid.toString()),
         "nome": nome,
       },
     );
@@ -54,12 +53,9 @@ void loginConta(email, senha, context) {
     erro(context, "Alguma Coisa está errada");
   });
 }
-
-registrardados() {
-  FirebaseFirestore.instance.collection('cafes').add(
-    {
-      "nome": "txtNome.text",
-      "valor": "txtValor.text",
-    },
-  );
+/*
+retornaNomeUsuario(idConta) async {
+  await FirebaseFirestore.instance
+  .collection('DadosUsuario').doc().get().,
 }
+*/

@@ -1,9 +1,14 @@
 //import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'libary_funcao.dart';
 
 class TelaPrincipal extends StatefulWidget {
-  const TelaPrincipal({Key? key}) : super(key: key);
+  TelaPrincipal({Key? key}) : super(key: key);
+
+
 
   @override
   State<TelaPrincipal> createState() => _TelaPrincipalState();
@@ -12,11 +17,28 @@ class TelaPrincipal extends StatefulWidget {
 class _TelaPrincipalState extends State<TelaPrincipal> {
   @override
   Widget build(BuildContext context) {
+    nomeUsuarioChamada(id){
+      var txtNome;
+
+      FirebaseFirestore.instance
+        .collection('DadosUsuarios')
+        .doc(id)
+        .get()
+        .then((doc){
+        txtNome = doc.get('nome');
+        },
+        );
+      return txtNome;
+
+    }
+    var id;    
+
+
     return Scaffold(
       backgroundColor: Colors.black,
 
       //Barra e Menu
-      appBar: barraMenuWidget("nome de usuario"),
+      appBar: barraMenuWidget(FirebaseAuth.instance.currentUser!.uid.toString()),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
@@ -47,12 +69,11 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/listadeusuarios');
                 },
-                child: const Text(
-                  "nome de usuario",
-                  style: TextStyle(
+                child: Text(
+                  FirebaseAuth.instance.currentUser!.email.toString(),
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 25,
-                    fontFamily: "Arial",
                   ),
                 ),
               ),
