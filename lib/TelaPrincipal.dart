@@ -1,44 +1,43 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'libary_funcao.dart';
 
 class TelaPrincipal extends StatefulWidget {
-  TelaPrincipal({Key? key}) : super(key: key);
-
-
+  const TelaPrincipal({Key? key}) : super(key: key);
 
   @override
   State<TelaPrincipal> createState() => _TelaPrincipalState();
 }
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
-  @override
-  Widget build(BuildContext context) {
-    nomeUsuarioChamada(id){
-      var txtNome;
-
-      FirebaseFirestore.instance
+  var txtNome = TextEditingController();
+  nomeUsuarioChamda(id) async {
+    await FirebaseFirestore.instance
         .collection('DadosUsuarios')
         .doc(id)
         .get()
-        .then((doc){
-        txtNome = doc.get('nome');
-        },
-        );
-      return txtNome;
+        .then((doc) {
+      txtNome.text = doc.get('nome');
+      print("a funcão foi chamada com sucesso variável txt com valor; " +
+          txtNome.text);
+    });
+  }
 
-    }
-    var id;    
-
+  @override
+  Widget build(BuildContext context) {
+    var id = FirebaseAuth.instance.currentUser!.uid.toString();
+    nomeUsuarioChamda(id);
+    print("chamada auxiliar " + txtNome.text);
 
     return Scaffold(
       backgroundColor: Colors.black,
 
       //Barra e Menu
-      appBar: barraMenuWidget(FirebaseAuth.instance.currentUser!.uid.toString()),
+
+      appBar: barraMenuWidget(txtNome.text),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
