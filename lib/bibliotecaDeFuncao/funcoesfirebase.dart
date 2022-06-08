@@ -53,9 +53,14 @@ void loginConta(email, senha, context) {
     erro(context, "Alguma Coisa está errada");
   });
 }
-/*
-retornaNomeUsuario(idConta) async {
-  await FirebaseFirestore.instance
-  .collection('DadosUsuario').doc().get().,
+
+//Ler dados dentro da Rota
+
+chamaDado(id) async {
+  CollectionReference userDB = FirebaseFirestore.instance.collection('DadosUsuarios');
+   DocumentSnapshot dadoDB = await userDB.doc(id).get();
+  print('tentativa 1 ${dadoDB.id}');
+  //print(dadoDB.['nome']);
+  return dadoDB.id;
+
 }
-*/

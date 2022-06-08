@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'bibliotecaDeFuncao/funcoesfirebase.dart';
 import 'libary_funcao.dart';
 
 class TelaPrincipal extends StatefulWidget {
@@ -14,22 +15,39 @@ class TelaPrincipal extends StatefulWidget {
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
   var txtNome = TextEditingController();
-  nomeUsuarioChamda(id) async {
-    await FirebaseFirestore.instance
-        .collection('DadosUsuarios')
-        .doc(id)
-        .get()
-        .then((doc) {
-      txtNome.text = doc.get('nome');
-      print("a funcão foi chamada com sucesso variável txt com valor; " +
-          txtNome.text);
-    });
+  var userDB;
+
+  @override
+  void initState() {
+    super.initState();
+    userDB = FirebaseFirestore.instance.collection('DadosUsuarios');
   }
+
+  // nomeUsuarioChamda(id) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('DadosUsuarios')
+  //       .doc(id)
+  //       .get()
+  //       .then((doc) {
+  //     txtNome.text = doc.get('nome') as String;
+  //     print("a funcão foi chamada com sucesso variável txt com valor; " +
+  //         txtNome.text);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    var id = FirebaseAuth.instance.currentUser!.uid.toString();
-    nomeUsuarioChamda(id);
+    var uid = FirebaseAuth.instance.currentUser!.uid.toString();
+    FirebaseFirestore.instance
+        .collection('DadosUsuarios')
+        .doc(uid)
+        .get()
+        .then((doc) {
+      txtNome.text = doc.get('nome') as String;
+      print("a funcão foi chamada com sucesso variável txt com valor; " +
+          txtNome.text);
+    });
+    
     print("chamada auxiliar " + txtNome.text);
 
     return Scaffold(
