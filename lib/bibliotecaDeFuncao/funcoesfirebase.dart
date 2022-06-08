@@ -17,9 +17,15 @@ void criarConta(email, senha, nome, context) {
     sucesso(context, 'Usuário criado com sucesso!');
     //REGISTRO DE DADOS
 
-    FirebaseFirestore.instance.collection('DadosUsuarios').doc(FirebaseAuth.instance.currentUser!.uid.toString(),).set(
+    FirebaseFirestore.instance
+        .collection('DadosUsuarios')
+        .doc(
+          FirebaseAuth.instance.currentUser!.uid.toString(),
+        )
+        .set(
       {
         "nome": nome,
+        //"Nascimento": Timestamp,
       },
     );
     Navigator.pop(context);
@@ -52,15 +58,4 @@ void loginConta(email, senha, context) {
     //Erro no Login
     erro(context, "Alguma Coisa está errada");
   });
-}
-
-//Ler dados dentro da Rota
-
-chamaDado(id) async {
-  CollectionReference userDB = FirebaseFirestore.instance.collection('DadosUsuarios');
-   DocumentSnapshot dadoDB = await userDB.doc(id).get();
-  print('tentativa 1 ${dadoDB.id}');
-  //print(dadoDB.['nome']);
-  return dadoDB.id;
-
 }

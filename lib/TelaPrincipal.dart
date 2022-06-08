@@ -16,6 +16,7 @@ class TelaPrincipal extends StatefulWidget {
 class _TelaPrincipalState extends State<TelaPrincipal> {
   var txtNome = TextEditingController();
   var userDB;
+  var nomeusuario;
 
   @override
   void initState() {
@@ -23,39 +24,40 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
     userDB = FirebaseFirestore.instance.collection('DadosUsuarios');
   }
 
-  // nomeUsuarioChamda(id) async {
-  //   await FirebaseFirestore.instance
-  //       .collection('DadosUsuarios')
-  //       .doc(id)
-  //       .get()
-  //       .then((doc) {
-  //     txtNome.text = doc.get('nome') as String;
-  //     print("a funcão foi chamada com sucesso variável txt com valor; " +
-  //         txtNome.text);
-  //   });
-  // }
+  nomeUsuarioChamda() async {
+    await FirebaseFirestore.instance
+        .collection('DadosUsuarios')
+        .doc(FirebaseAuth.instance.currentUser!.uid.toString())
+        .get()
+        .then((doc) {
+      setState(() {
+        nomeusuario = doc.get('nome') as String;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var uid = FirebaseAuth.instance.currentUser!.uid.toString();
-    FirebaseFirestore.instance
-        .collection('DadosUsuarios')
-        .doc(uid)
-        .get()
-        .then((doc) {
-      txtNome.text = doc.get('nome') as String;
-      print("a funcão foi chamada com sucesso variável txt com valor; " +
-          txtNome.text);
-    });
-    
-    print("chamada auxiliar " + txtNome.text);
+    // print("chamada auxiliar " + txtNome.text);
 
     return Scaffold(
       backgroundColor: Colors.black,
 
       //Barra e Menu
+      appBar: AppBar(
+        title: FutureBuilder(
+            future: nomeUsuarioChamda(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return Text(nomeusuario);
+              }
+            }),
+      ),
 
-      appBar: barraMenuWidget(txtNome.text),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
