@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 //
 
 void criarConta(email, senha, nome, context) {
-  
   FirebaseAuth.instance
       .createUserWithEmailAndPassword(email: email, password: senha)
       .then((res) {
@@ -28,7 +27,8 @@ void criarConta(email, senha, nome, context) {
         "nome": nome,
         "dataNasc": Timestamp.fromMillisecondsSinceEpoch(978141600000),
         //"Nascimento": Timestamp,
-        "horaSono": Timestamp.fromMillisecondsSinceEpoch(978141600000),
+        "inicioHoraSono": Timestamp.fromMillisecondsSinceEpoch(978141600000),
+        "fimHorarioSono": Timestamp.fromMillisecondsSinceEpoch(978141600000),
       },
     );
     Navigator.pop(context);
@@ -53,12 +53,12 @@ void loginConta(email, senha, context) {
       .then((res) {
     //Login Efetuado com Sucesso
     //Mensagem
-    sucesso(context, "Conta Logada Com Sucesso");
+    sucesso(context, 'Conta Logada Com Sucesso');
 
     //Rota
     Navigator.pushReplacementNamed(context, '/telaPrincipal');
   }).catchError((e) {
     //Erro no Login
-    erro(context, "Alguma Coisa está errada");
+    erro(context, 'Alguma Coisa está errada');
   });
 }

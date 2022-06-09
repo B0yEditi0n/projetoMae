@@ -1,3 +1,6 @@
+//Teste de Criação
+import 'package:flutter/cupertino.dart';
+
 //import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,14 +15,11 @@ class configuraUsuario extends StatefulWidget {
 }
 
 class _configuraUsuarioState extends State<configuraUsuario> {
-  
-
   //Controladores de Editor de Texto
   var txtNome = TextEditingController();
-  
 
   //Data de Nascimento
-  var dataNasc = Timestamp(0,0);
+  var dataNasc = Timestamp(0, 0);
   var txtDataDay = TextEditingController();
   var txtDataMonth = TextEditingController();
   var txtDataYear = TextEditingController();
@@ -27,9 +27,8 @@ class _configuraUsuarioState extends State<configuraUsuario> {
   //Hora de Sono
   var horaSono_inicio = Timestamp(0, 0);
   var horaSono_fim = Timestamp(0, 0);
-  var txtHora = TextEditingController();
-  var txtMinutos = TextEditingController();
-
+  var txtHora_i = TextEditingController();
+  var txtHora_f = TextEditingController();
 
   @override
   PegarDados() async {
@@ -40,7 +39,7 @@ class _configuraUsuarioState extends State<configuraUsuario> {
         .then((doc) {
       txtNome.text = doc.get('nome');
       dataNasc = (doc.get('dataNasc'));
-      horaSono = (doc.get('horaSono'));
+      horaSono_inicio = (doc.get('horaSono'));
     });
   }
 
@@ -53,14 +52,10 @@ class _configuraUsuarioState extends State<configuraUsuario> {
             future: PegarDados(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              }
-              else {
-                
-                
+              } else {
                 //
                 //Atribuir Valores do FireBase
                 //
@@ -68,10 +63,11 @@ class _configuraUsuarioState extends State<configuraUsuario> {
                 //Data
                 txtDataYear.text = dataNasc.toDate().year.toString();
                 txtDataMonth.text = dataNasc.toDate().month.toString();
-                txtDataDay.text  = dataNasc.toDate().day.toString();
+                txtDataDay.text = dataNasc.toDate().day.toString();
                 //Hora
-                txtHora.text = horaSono.toDate().hour.toString();
-                txtMinutos.text = horaSono.toDate().minute.toString();
+                txtHora_i.text =
+                    '${horaSono_inicio.toDate().hour.toString()}:${horaSono_inicio.toDate().minute.toString()}';
+                txtHora_f.text = horaSono_inicio.toDate().minute.toString();
 
                 return SingleChildScrollView(
                   child: Padding(
@@ -91,7 +87,8 @@ class _configuraUsuarioState extends State<configuraUsuario> {
                       //
                       textoTitulo("Alterar Nome", Colors.white),
                       const SizedBox(height: 20),
-                      widgetDialogo("Nome de Usuario", "Nome do Usuário", txtNome, false),
+                      widgetDialogo(
+                          "Nome de Usuario", "Nome do Usuário", txtNome, false),
                       const SizedBox(height: 30),
 
                       const Divider(
@@ -133,16 +130,18 @@ class _configuraUsuarioState extends State<configuraUsuario> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          widgetDialogoSmall("Início", "hh:Mm", txtHora, false),
+                          widgetDialogoSmall(
+                              "Início", "hh:Mm", txtHora_i, false),
                           const SizedBox(
                             width: 10,
                           ),
-                          widgetDialogoSmall("Término", "hh:Mm", txtMinutos, false),
+                          widgetDialogoSmall(
+                              "Término", "hh:Mm", txtHora_f, false),
                         ],
                       ),
 
                       const SizedBox(height: 30),
-                      
+
                       const Divider(
                         height: 50,
                         thickness: 2,
@@ -152,22 +151,25 @@ class _configuraUsuarioState extends State<configuraUsuario> {
                       ),
 
                       //Botão de Salvar
-                      
+
                       SizedBox(
                         width: 100,
                         height: 60,
-                        
-                        child: 
-                        
-                          TextButton(onPressed: ()
-                          {
+                        child: TextButton(
+                          onPressed: () {
                             //Conversão de Data
-                            var data = '${txtDataYear.text}-${txtDataMonth.text}-${txtDataDay.text}';
+                            var data = DateTime.utc(
+                                int.parse(txtDataYear.text),
+                                int.parse(txtDataMonth.text),
+                                int.parse(txtDataDay.text));
 
                             //Convesão Hora
-                            var hora = '2000-01-01 ${txtHora.text}-${txtMinutos.text}';
-                            print(Timestamp.fromMillisecondsSinceEpoch(DateTime.parse(data).millisecondsSinceEpoch));
-                            print(Timestamp.fromMillisecondsSinceEpoch(DateTime.parse(hora).millisecondsSinceEpoch),);
+                            var hora = DateTime.parse(
+                                '2000-01-30 ${txtHora_i.text}:00');
+                            print(Timestamp.fromMillisecondsSinceEpoch(
+                                data.millisecondsSinceEpoch));
+                            print(
+                                hora.hour.toString() + hora.minute.toString());
 
                             /*
                             FirebaseFirestore.instance.collection('DadosUsuarios').doc(FirebaseAuth.instance.currentUser!.uid.toString(),).set({
@@ -176,19 +178,19 @@ class _configuraUsuarioState extends State<configuraUsuario> {
                               "horaSono": Timestamp.fromMillisecondsSinceEpoch(DateTime.parse(hora).millisecondsSinceEpoch),
                               },
                             );*/
-                          }, 
-                          style: TextButton.styleFrom(backgroundColor:Colors.white, primary: Colors.black)  ,child:  
-                            Row(
-                              //crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                              
-                                Text('Salvar'),
-                                Icon(Icons.save),
-                              ],
-                            ),
-                            
+                          },
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              primary: Colors.black),
+                          child: Row(
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text('Salvar'),
+                              Icon(Icons.save),
+                            ],
                           ),
+                        ),
                       )
                     ]),
                   ),
