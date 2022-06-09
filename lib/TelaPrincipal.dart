@@ -37,12 +37,12 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.black,
 
       //Barra e Menu
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: FutureBuilder(
             future: nomeUsuarioChamda(),
             builder: (context, snapshot) {
@@ -51,7 +51,15 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                return Text(nomeusuario);
+                return Center(
+                  child: Text(
+                    nomeusuario,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
               }
             }),
       ),

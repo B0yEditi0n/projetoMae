@@ -1,4 +1,6 @@
+import 'dart:collection';
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../dados_usuarios/UsuariosBd.dart';
@@ -11,30 +13,13 @@ class ListaUsuarios extends StatefulWidget {
 }
 
 class LlistUsuariosState extends State<ListaUsuarios> {
-  // Lista Dinâmica contendo objetos da classe UsuariosBd
-  List<UsuariosBd> lista = [];
+  var usuarios;
 
-  // CARREGAR UM ARQUIVO JSON
-  carregarJson() async {
-    final String arquivo =
-        await rootBundle.loadString('lib/dados_usuarios/UsuariosBd.json');
-    final dynamic data = await json.decode(arquivo);
-
-    //percorrer o arquivo
-    setState(() {
-      data.forEach((item) {
-        lista.add(UsuariosBd.fromJson(item));
-      });
-    });
-  }
-
-  // Inicialização da UI e leitura do arquivo JSON
+  // INICIALIZAR
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await carregarJson();
-    });
+    usuarios = FirebaseFirestore.instance.collection('DadosUsuarios');
   }
 
   @override
@@ -48,8 +33,27 @@ class LlistUsuariosState extends State<ListaUsuarios> {
 
       // Exibe elementos da lista
       body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView.builder(
+          padding: const EdgeInsets.all(20),
+          child: StreamBuilder<QuerySnapshot>(
+            stream: usuarios.snapshot,
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  return const Center(
+                      child: Text('Não foi possível conectar.'));
+                case ConnectionState.waiting:
+                  return const Center(child: CircularProgressIndicator());
+                default:
+                  final users = snapshot.requireData;
+                  return ListView.builder(
+                      itemCount: users.size,
+                      itemBuilder: (context, index) {
+                        return atribuiVariavel(users.docs[index]);
+                      });
+              }
+            },
+          )
+          /*ListView.builder(
           itemCount: lista.length,
           itemBuilder: (context, index) {
             return ListTile(
@@ -71,7 +75,25 @@ class LlistUsuariosState extends State<ListaUsuarios> {
               },
             );
           },
-        ),
+        ),*/
+          ),
+    );
+  }
+
+  atribuiVariavel(dado) {
+    String nome = dado.data()['nome'];
+
+    return ListTile(
+      title: Text(nome),
+      trailing: IconButton(
+        icon: const Icon(Icons.delete_outline),
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            '/detalhesContaUsuario',
+            arguments: dado.id,
+          );
+        },
       ),
     );
   }

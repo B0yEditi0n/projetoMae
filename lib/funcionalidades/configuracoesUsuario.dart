@@ -39,7 +39,8 @@ class _configuraUsuarioState extends State<configuraUsuario> {
         .then((doc) {
       txtNome.text = doc.get('nome');
       dataNasc = (doc.get('dataNasc'));
-      horaSono_inicio = (doc.get('horaSono'));
+      horaSono_inicio = (doc.get('inicioHoraSono'));
+      horaSono_fim = (doc.get('fimHorarioSono'));
     });
   }
 
@@ -67,7 +68,8 @@ class _configuraUsuarioState extends State<configuraUsuario> {
                 //Hora
                 txtHora_i.text =
                     '${horaSono_inicio.toDate().hour.toString()}:${horaSono_inicio.toDate().minute.toString()}';
-                txtHora_f.text = horaSono_inicio.toDate().minute.toString();
+                txtHora_f.text =
+                    '${horaSono_fim.toDate().hour.toString()}:${horaSono_fim.toDate().minute.toString()}';
 
                 return SingleChildScrollView(
                   child: Padding(
@@ -107,11 +109,11 @@ class _configuraUsuarioState extends State<configuraUsuario> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SizedBox(height: 20),
-                          widgetDialogoSmall("dd", "", txtDataDay, false),
+                          widgetDialogoSmall("dia", "", txtDataDay, false),
                           const SizedBox(width: 10),
-                          widgetDialogoSmall("mm", "", txtDataMonth, false),
+                          widgetDialogoSmall("mes", "", txtDataMonth, false),
                           const SizedBox(width: 10),
-                          widgetDialogoSmall("aa", "", txtDataYear, false),
+                          widgetDialogoSmall("ano", "", txtDataYear, false),
                         ],
                       ),
 
@@ -157,33 +159,64 @@ class _configuraUsuarioState extends State<configuraUsuario> {
                         height: 60,
                         child: TextButton(
                           onPressed: () {
-                            //Conversão de Data
+                            //
+                            //CONVERSÃO DE VARIÁVEIS
+                            //
+
+                            //CONVERSÃO DATA
                             var data = DateTime.utc(
                                 int.parse(txtDataYear.text),
                                 int.parse(txtDataMonth.text),
                                 int.parse(txtDataDay.text));
 
-                            //Convesão Hora
-                            var hora = DateTime.parse(
-                                '2000-01-30 ${txtHora_i.text}:00');
-                            print(Timestamp.fromMillisecondsSinceEpoch(
-                                data.millisecondsSinceEpoch));
-                            print(
-                                hora.hour.toString() + hora.minute.toString());
+                            //CONVERSÃO HORA
 
-                            /*
-                            FirebaseFirestore.instance.collection('DadosUsuarios').doc(FirebaseAuth.instance.currentUser!.uid.toString(),).set({
-                              "nome": txtNome.text,
-                              "dataNasc": Timestamp.fromMillisecondsSinceEpoch(DateTime.parse(data).millisecondsSinceEpoch),
-                              "horaSono": Timestamp.fromMillisecondsSinceEpoch(DateTime.parse(hora).millisecondsSinceEpoch),
+                            //hora inicial
+                            var hora_i = DateTime.utc(
+                                2000,
+                                1,
+                                30,
+                                int.parse(txtHora_i.text.substring(0, 2)),
+                                int.parse(txtHora_i.text.substring(3, 5)));
+
+                            //hora final
+                            var hora_f = DateTime.utc(
+                              2000,
+                              1,
+                              30,
+                              int.parse(txtHora_f.text.substring(0, 2)),
+                              int.parse(txtHora_f.text.substring(3, 5)),
+                            );
+
+                            //
+                            //GRAVANDO NO FIREBASE
+                            //
+
+                            FirebaseFirestore.instance
+                                .collection('DadosUsuarios')
+                                .doc(
+                                  FirebaseAuth.instance.currentUser!.uid
+                                      .toString(),
+                                )
+                                .set(
+                              {
+                                "nome": txtNome.text,
+                                "dataNasc":
+                                    Timestamp.fromMillisecondsSinceEpoch(
+                                        data.millisecondsSinceEpoch),
+                                "inicioHoraSono":
+                                    Timestamp.fromMillisecondsSinceEpoch(
+                                        hora_i.millisecondsSinceEpoch),
+                                "fimHorarioSono":
+                                    Timestamp.fromMillisecondsSinceEpoch(
+                                        hora_f.millisecondsSinceEpoch),
                               },
-                            );*/
+                            );
                           },
                           style: TextButton.styleFrom(
                               backgroundColor: Colors.white,
                               primary: Colors.black),
                           child: Row(
-                            //crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text('Salvar'),

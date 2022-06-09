@@ -26,7 +26,6 @@ void criarConta(email, senha, nome, context) {
       {
         "nome": nome,
         "dataNasc": Timestamp.fromMillisecondsSinceEpoch(978141600000),
-        //"Nascimento": Timestamp,
         "inicioHoraSono": Timestamp.fromMillisecondsSinceEpoch(978141600000),
         "fimHorarioSono": Timestamp.fromMillisecondsSinceEpoch(978141600000),
       },
