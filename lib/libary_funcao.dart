@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 //Variáveis Globais
@@ -131,3 +132,14 @@ divisor() {
     color: Colors.grey,
   );
 }
+
+//Converter em Timestamp
+
+/*
+conversaoTimestamp(hora){
+  String sdatetime = "2021-12-04";
+  DateTime sdate = DateTime.parse(sdatetime);
+  int stimestamp = sdate.microsecondsSinceEpoch;
+  print(stimestamp);
+  
+}*/

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 //
 
 void criarConta(email, senha, nome, context) {
+  
   FirebaseAuth.instance
       .createUserWithEmailAndPassword(email: email, password: senha)
       .then((res) {
@@ -25,7 +26,9 @@ void criarConta(email, senha, nome, context) {
         .set(
       {
         "nome": nome,
+        "dataNasc": Timestamp.fromMillisecondsSinceEpoch(978141600000),
         //"Nascimento": Timestamp,
+        "horaSono": Timestamp.fromMillisecondsSinceEpoch(978141600000),
       },
     );
     Navigator.pop(context);

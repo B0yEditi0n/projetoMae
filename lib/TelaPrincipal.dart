@@ -14,15 +14,14 @@ class TelaPrincipal extends StatefulWidget {
 }
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
-  var txtNome = TextEditingController();
-  var userDB;
-  var nomeusuario;
+  var nomeusuario = '';
 
   @override
+  /*
   void initState() {
     super.initState();
     userDB = FirebaseFirestore.instance.collection('DadosUsuarios');
-  }
+  }*/
 
   nomeUsuarioChamda() async {
     await FirebaseFirestore.instance
@@ -31,14 +30,13 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         .get()
         .then((doc) {
       setState(() {
-        nomeusuario = doc.get('nome') as String;
+        nomeusuario = doc.get('nome');
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // print("chamada auxiliar " + txtNome.text);
 
     return Scaffold(
       backgroundColor: Colors.black,
